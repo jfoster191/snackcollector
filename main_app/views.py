@@ -45,7 +45,7 @@ def add_comment(request, object_id):
   snack = Snack.objects.get(id=object_id)
   new_comment = Comment.objects.create(title=request.POST['id_title'], comment=request.POST['id_comment'], snack_id=snack.id)
   new_comment.save()
-  return redirect ('snack_detail', pk=snack.id)
+  return redirect ('snack_detail', snack_id=object_id)
 
 class TasteList(ListView):
   model = Taste

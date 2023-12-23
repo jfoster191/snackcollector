@@ -1,0 +1,18 @@
+body{
+  background-image: url(https://previews.123rf.com/images/hatza/hatza1308/hatza130800517/21394091-snack-food-background.jpg);
+}
+
+.card{
+  border: 1px solid black;
+  padding: 1vmin;
+  margin-bottom: 1vmin;
+}
+
+nav{
+  margin-bottom: 3vmin;
+}
+
+h1{
+  color: darkgreen;
+  text-shadow: #ffffff 1px 2px 10px;
+}

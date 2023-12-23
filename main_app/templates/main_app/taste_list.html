@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>All Taste</h1>
+
+<ul style="list-style-type: none;">
+  {% for object in object_list %}
+  <!-- <a href="{% url 'snack_detail' object.id %}" style="text-decoration: none;"> -->
+    <div class="card">
+      <li class="card-title" style="font-weight: bold;">{{ object.name }}</li>
+      <label>Description:</label>
+      <li>{{ object.description }}</li>
+    </div>
+  <!-- </a> -->
+  {% endfor %}
+  </ul>
+
+{% endblock %}

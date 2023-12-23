@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card text-center">
+  <div class="card-content">
+    <h1 class="card-title">{{ snack.name }} Details</h1>
+    <h4>Description:</h4>
+    <h6>{{ snack.description }}</h6>
+    <h4>Prepartion Time</h4>
+    <h6>{{ snack.prep_time }} Minutes</h6>
+  </div>
+  <div class="card-action">
+    <a class="btn btn-secondary" href="{% url 'snack_update' snack.id %}">Edit</a>
+    <a class="btn btn-danger" href="{% url 'snack_delete' snack.id %}">Delete</a>
+  </div>
+</div>
+<hr>
+
+{% if not snack.comment_set.all %}
+  <h1>No Comments Yet</h1>
+{% else %}
+  {% for comment in snack.comment_set.all %}
+    <div class="card">
+      <div class="card-content">
+        <h1 class="card-title">{{ comment.title }}</h1>
+        <h4>Comment:</h4>
+        <h6>{{ comment.comment }}</h6>
+      </div>
+    </div>
+  {% endfor %}
+{% endif %}  
+
+<form action="{% url 'add_comment' snack.id %}" method="POST">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label class="form-text">Title</label>
+    <input type="text" class="form-control" name="id_title">
+  </div>
+  <div class="mb-3">
+    <label class="form-text">Comment</label>
+    <textarea class="form-control" name="id_comment"></textarea>
+  </div>
+  <input type="submit" class="btn btn-primary" value="Add Comment">
+</form>
+<div>{{ tastes.tastes_title }}</div>
+<hr>
+
+<div class="col">
+  <h3>{{ snack.name }}'s Tastes</h3>
+  {% if snack.tastes.count %}
+    {% for taste in snack.tastes.all %}
+      <div class="card">
+        <div class="card-body">
+          <span class="card-title">
+            <h4>{{ taste }}</h4>
+          </span>
+        </div>
+        <div class="card-action">
+          <form action="{% url 'unassoc_taste' snack.id taste.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">REMOVE</button>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <h5>No Taste Yet</h5>
+  {% endif %}
+</div>
+<hr>
+
+<div class="col">
+  <h3>Available Tastes</h3>
+  {% if tastes.count %}
+    {% for taste in tastes.all %}
+      <div class="card">
+        <div class="card-body">
+          <span class="card-title">
+            <span>{{ taste }}</span>
+          </span>
+        </div>
+        <div class="card-action">
+          <form action="{% url 'assoc_taste' snack.id taste.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <h5>{{ snack.name }} Has All Taste Available</h5>
+  {% endif %}
+</div>
+
+{% endblock %}
